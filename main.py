@@ -30,6 +30,14 @@ def generate():
     # Return the generated image
     return send_file(path, mimetype="image/png")
 
+@app.route("/")
+def home():
+    # Check if a startup QR exists
+    startup_qr = os.path.join(os.environ.get("QR_OUT", "qr_codes"), "startup_qr.png")
+    if os.path.exists(startup_qr):
+        return send_file(startup_qr, mimetype="image/png")
+    return "QR Code Generator is running! Use /generate?url=YOUR_URL to create a QR code."
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="QR Code Generator")
     parser.add_argument("--url", default=None, help="URL to generate QR code for at startup")
