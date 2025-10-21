@@ -31,7 +31,7 @@ jobs:
 
       - name: Run container and show logs
         run: |
-          docker run -d --name qr-generator -p 8501:8080 qr-code-generator-app:latest
-          sleep 5   # give it a moment to start
+          docker run -d --name qr-generator -p 8501:8080 ${{ secrets.DOCKERHUB_USERNAME }}/qr-code-generator-app:latest
+          sleep 5
           docker logs qr-generator
 
