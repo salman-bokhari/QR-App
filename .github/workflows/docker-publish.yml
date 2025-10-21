@@ -35,3 +35,12 @@ jobs:
           sleep 5
           docker logs qr-generator
 
+      - name: Test QR endpoint
+        run: |
+          RESPONSE=$(curl -s -o qr_test.png -w "%{http_code}" "http://localhost:8501/generate?url=https://example.com")
+          if [ "$RESPONSE" -ne 200 ]; then
+            echo "QR generation failed with status $RESPONSE"
+            exit 1
+          fi
+          echo "QR generated successfully"
+          ls -l qr_test.png
